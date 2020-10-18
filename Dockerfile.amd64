@@ -80,6 +80,20 @@ RUN apt-get update \
 
 
 ################################################################################
+# My changes
+################################################################################
+
+RUN apt update \
+	&& apt install -y --no-install-recommends --allow-unauthenticated apt-transport-https \
+	&& curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add - \
+	&& echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list \
+	&& apt update \
+	&& apt install -y --no-install-recommends --allow-unauthenticated brave-browser \
+	&& rm -rf /var/lib/apt/lists/*
+	
+
+
+################################################################################
 # builder
 ################################################################################
 FROM ubuntu:20.04 as builder
