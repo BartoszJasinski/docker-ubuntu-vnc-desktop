@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 .PHONY: build run
 
 # Default values for variables
@@ -37,13 +39,38 @@ run:
 
 # First run many containers in parallel
 run-many:
-	for i in $(enum -e 1 11); do docker run --privileged -p 60${i}:80 -p 6081:443 -v ${PWD}:/src:ro -e USER=doro -e  PASSWORD=mypassword -e ALSADEV=hw:2,0 -e SSL_PORT=443 -e RELATIVE_URL_ROOT=approot -e OPENBOX_ARGS="--startup /usr/bin/lxterminal" -v ${PWD}/ssl:/etc/nginx/ssl --device /dev/snd --name ubuntu${i} $(REPO):$(TAG)
-	done
+	bash run-many.sh
+#	for i in $(seq -w 1 2); \
+#	do \
+#		docker run --privileged \
+#		-p 60${i}:80 -p 6081:443 \
+#		-v ${PWD}:/src:ro \
+#		-e USER=doro -e PASSWORD=mypassword \
+#		-e ALSADEV=hw:2,0 \
+#		-e SSL_PORT=443 \
+#		-e RELATIVE_URL_ROOT=approot \
+#		-e OPENBOX_ARGS="--startup /usr/bin/lxterminal" \
+#		-v ${PWD}/ssl:/etc/nginx/ssl \
+#		--device /dev/snd \
+#		--name ubuntu${i} \
+#		$(REPO):$(TAG); \
+#	done
 	
-# Command for starting many existing 	
-start-many: 
-	docker exec -it ubuntu-desktop-lxde-test bash
+#		for i in $(enum -e 1 11); do docker run --privileged -p 60${i}:80 -p 6081:443 -v ${PWD}:/src:ro -e USER=doro -e  PASSWORD=mypassword -e ALSADEV=hw:2,0 -e SSL_PORT=443 -e RELATIVE_URL_ROOT=approot -e OPENBOX_ARGS="--startup /usr/bin/lxterminal" -v ${PWD}/ssl:/etc/nginx/ssl --device /dev/snd --name ubuntu${i} $(REPO):$(TAG)	done
 
+	
+# Start existing containers
+start-many:
+	bash start-many.sh
+
+# Stop existing containers	
+stop-many:
+	docker stop $(docker ps -aq)
+
+# Remove exising containers
+remove-many:
+	docker rm $(docker ps -aq)
+	
 # Connect inside the running container for debugging
 shell:
 	docker exec -it ubuntu-desktop-lxde-test bash
