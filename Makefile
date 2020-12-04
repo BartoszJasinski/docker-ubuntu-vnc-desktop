@@ -29,7 +29,7 @@ run:
 	docker run --privileged --rm \
 		-p 6080:80 -p 6081:443 \
 		-v ${PWD}:/src:ro \
-		-e USER=doro -e PASSWORD=mypassword \
+		-e USER=doro -e PASSWORD=pass \
 		-e ALSADEV=hw:2,0 \
 		-e SSL_PORT=443 \
 		-e RELATIVE_URL_ROOT=approot \
