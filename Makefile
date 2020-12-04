@@ -13,6 +13,9 @@ FLAVOR ?= lxde
 # armhf or amd64
 ARCH ?= amd64
 
+MIN_UBUNTU ?= 1
+MAX_UBUNTU ?= 99
+
 # These files will be generated from teh Jinja templates (.j2 sources)
 templates = Dockerfile rootfs/etc/supervisor/conf.d/supervisord.conf
 
@@ -61,7 +64,7 @@ run-many:
 	
 # Start existing containers
 start-many:
-	bash start-many.sh
+	bash start-many.sh $(MIN_UBUNTU) $(MAX_UBUNTU)
 
 # Stop existing containers	
 stop-many:

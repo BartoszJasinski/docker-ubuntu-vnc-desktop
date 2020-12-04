@@ -6,6 +6,16 @@ TAG=latest
 
 RED='\033[0;32m'
 
+MIN_UBUNTU=$1
+MAX_UBUNTU=$2
+
+if [ $# -eq 2 ]
+  then
+    echo $MIN_UBUNTU
+    echo
+    echo $MAX_UBUNTU
+fi
+
 
 #for i in $(seq -w 1 2); \
 #do \
@@ -24,7 +34,7 @@ RED='\033[0;32m'
 #done
 
 
-for i in $(seq -w 1 99); \
+for i in $(seq -w $MIN_UBUNTU $MAX_UBUNTU); \
 do \
-	ubuntu${i}
+	docker start ubuntu${i} &
 done

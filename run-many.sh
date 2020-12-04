@@ -27,7 +27,7 @@ RED='\033[0;32m'
 for i in $(seq -w 1 99); \
 do \
 	(docker run --privileged \
-	-p 60$((i)):80:80 -p 6$((i+100)):443 \
+	-p 60$((i)):80 -p 6$((i+100)):443 \
 	-v ${PWD}:/src:ro \
 	-e USER=doro -e PASSWORD=mypassword \
 	-e ALSADEV=hw:2,0 \
